@@ -195,7 +195,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen>
                     backgroundColor: AppColors.error,
                   )
                 : ElevatedButton.icon(
-                    onPressed: () => _addToCart(offering['id']),
+                    onPressed: () => _addToCart(offering['teaching_unit_id'] ?? offering['id']),
                     icon: const Icon(Icons.add, size: 18),
                     label: const Text('Add'),
                   ),

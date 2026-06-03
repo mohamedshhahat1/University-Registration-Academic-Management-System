@@ -48,6 +48,7 @@ async def list_course_offerings(
     query = select(CourseOffering).options(
         selectinload(CourseOffering.course),
         selectinload(CourseOffering.semester),
+        selectinload(CourseOffering.teaching_units),
     )
 
     if semester_id:
@@ -76,6 +77,7 @@ async def list_course_offerings(
             course_name=o.course.name,
             credit_hours=o.course.credit_hours,
             semester_id=o.semester_id,
+            teaching_unit_id=o.teaching_units[0].id if o.teaching_units else None,
             max_capacity=o.max_capacity,
             current_enrolled=o.current_enrolled,
             available_seats=o.max_capacity - o.current_enrolled,
@@ -97,7 +99,7 @@ async def get_offering_units(
         .where(TeachingUnit.offering_id == offering_id)
         .options(
             selectinload(TeachingUnit.schedules),
-            selectinload(TeachingUnit.instructor).selectinload(lambda: None),
+            selectinload(TeachingUnit.instructor),
         )
     )
     units = result.scalars().all()
@@ -115,13 +117,23 @@ async def get_offering_units(
             )
             for s in unit.schedules
         ]
+        instructor_name = None
+        if unit.instructor and unit.instructor.user_id:
+            from app.models.user import User as UserModel
+            user_result = await db.execute(
+                select(UserModel).where(UserModel.id == unit.instructor.user_id)
+            )
+            user_obj = user_result.scalar_one_or_none()
+            if user_obj:
+                instructor_name = user_obj.full_name
+
         response.append(TeachingUnitWithSchedule(
             unit=TeachingUnitResponse(
                 id=unit.id,
                 offering_id=unit.offering_id,
                 type=unit.type,
                 group_number=unit.group_number,
-                instructor_name=None,
+                instructor_name=instructor_name,
                 max_capacity=unit.max_capacity,
                 current_enrolled=unit.current_enrolled,
                 available_seats=unit.max_capacity - unit.current_enrolled,

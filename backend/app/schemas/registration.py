@@ -20,6 +20,7 @@ class CourseOfferingResponse(BaseModel):
     course_name: str
     credit_hours: int
     semester_id: UUID
+    teaching_unit_id: Optional[UUID] = None
     max_capacity: int
     current_enrolled: int
     available_seats: int
