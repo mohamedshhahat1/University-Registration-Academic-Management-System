@@ -60,7 +60,8 @@ class User(Base):
 
     # Relationships
     student: Mapped["Student"] = relationship(
-        "Student", back_populates="user", uselist=False
+        "Student", back_populates="user", uselist=False,
+        foreign_keys="Student.user_id"
     )
     instructor: Mapped["Instructor"] = relationship(
         "Instructor", back_populates="user", uselist=False

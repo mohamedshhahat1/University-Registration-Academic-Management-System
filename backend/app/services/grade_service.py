@@ -27,20 +27,20 @@ from app.schemas.grade import (
 )
 
 
-# Grade scale mapping
+# Grade scale mapping - using lower bounds for comparison
 GRADE_SCALE = {
     "A+": {"min": 97, "max": 100, "points": 4.00},
-    "A":  {"min": 93, "max": 96,  "points": 4.00},
-    "A-": {"min": 90, "max": 92,  "points": 3.70},
-    "B+": {"min": 87, "max": 89,  "points": 3.30},
-    "B":  {"min": 83, "max": 86,  "points": 3.00},
-    "B-": {"min": 80, "max": 82,  "points": 2.70},
-    "C+": {"min": 77, "max": 79,  "points": 2.30},
-    "C":  {"min": 73, "max": 76,  "points": 2.00},
-    "C-": {"min": 70, "max": 72,  "points": 1.70},
-    "D+": {"min": 67, "max": 69,  "points": 1.30},
-    "D":  {"min": 60, "max": 66,  "points": 1.00},
-    "F":  {"min": 0,  "max": 59,  "points": 0.00},
+    "A":  {"min": 93, "max": 96.99,  "points": 4.00},
+    "A-": {"min": 90, "max": 92.99,  "points": 3.70},
+    "B+": {"min": 87, "max": 89.99,  "points": 3.30},
+    "B":  {"min": 83, "max": 86.99,  "points": 3.00},
+    "B-": {"min": 80, "max": 82.99,  "points": 2.70},
+    "C+": {"min": 77, "max": 79.99,  "points": 2.30},
+    "C":  {"min": 73, "max": 76.99,  "points": 2.00},
+    "C-": {"min": 70, "max": 72.99,  "points": 1.70},
+    "D+": {"min": 67, "max": 69.99,  "points": 1.30},
+    "D":  {"min": 60, "max": 66.99,  "points": 1.00},
+    "F":  {"min": 0,  "max": 59.99,  "points": 0.00},
 }
 
 

@@ -37,6 +37,12 @@ def create_app() -> FastAPI:
     # Include API router
     app.include_router(api_router)
 
+    # Startup event - create tables
+    @app.on_event("startup")
+    async def startup():
+        from app.core.database import init_db
+        await init_db()
+
     # Health check endpoint
     @app.get("/health")
     async def health_check():
