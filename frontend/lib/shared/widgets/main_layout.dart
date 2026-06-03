@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/services/api_service.dart';
 
 /// Main application layout with responsive sidebar navigation.
 class MainLayout extends ConsumerWidget {
@@ -129,7 +130,8 @@ class MainLayout extends ConsumerWidget {
   }
 
   void _logout(BuildContext context, WidgetRef ref) {
-    // Clear tokens and navigate to login
+    // Clear stored tokens so back button can't re-authenticate
+    ref.read(apiServiceProvider).clearTokens();
     context.go('/login');
   }
 }
