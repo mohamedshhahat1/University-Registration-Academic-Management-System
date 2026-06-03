@@ -1,6 +1,8 @@
 /// API endpoint constants and configuration.
 class ApiConstants {
-  static const String baseUrl = 'http://localhost:8000/api/v1';
+  // Use relative URL when served behind a proxy, or absolute for local dev
+  // For Coder workspace: use the proxied backend URL
+  static const String baseUrl = 'https://8000--main--orange-hyena-49--usr1-o.ai.coder.com/api/v1';
   
   // Auth endpoints
   static const String login = '/auth/login';
